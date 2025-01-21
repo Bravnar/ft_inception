@@ -11,6 +11,13 @@ nginx-debug:
 	@sleep 2
 	@docker exec -it nginx-debug-container sh
 
+wp-debug:
+	@docker build -t wp-debug ./srcs/requirements/wordpress
+	@docker run -d --name wp-debug-container wp-debug
+	@echo "Waiting for WordPress to initialize..."
+	@sleep 2
+	@docker exec -t wp-debug-container bash
+
 stop-mariadb-debug:
 	@docker stop mariadb-debug-container || true
 	@docker rm mariadb-debug-container || true

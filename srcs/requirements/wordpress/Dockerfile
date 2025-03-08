@@ -1,18 +1,22 @@
-FROM	alpine:3.20.3
+FROM	alpine:3.20.6
 
 RUN apk add --no-cache \
-	bash \
-	php83 \
-	php83-fpm \
-	php83-phar \
-	php83-mysqli \
-	php83-cli \
-	mariadb-client \
-#	gnu-libiconv \
-	php83-iconv
+	php \
+	php-fpm \
+	php-phar \
+	php-cli \
+	php-mysqli \
+	php-mbstring \
+	curl 
+
+RUN adduser -D -G www-data www-data
 
 WORKDIR /var/www/wordpress
 
+# COPY	./conf/www.conf /etc/php82/php-fpm.d/.
+COPY	./tools/start.sh /usr/local/bin/start.sh
+RUN		chmod +x /usr/local/bin/start.sh
+
 EXPOSE 9000
 
-ENTRYPOINT [ "php-fpm83", "--nodaemonize" ]
+ENTRYPOINT [ "/usr/local/bin/start.sh" ] 

@@ -8,7 +8,7 @@
 # this is only for the mysqld standalone daemon
 [mysqld]
 datadir="/var/lib/mysql"
-socket="/run/mysqld/mysqld.sock 
+socket="/run/mysqld/mysqld.sock"
 port=3306
 user=mysql
 bind-address=0.0.0.0

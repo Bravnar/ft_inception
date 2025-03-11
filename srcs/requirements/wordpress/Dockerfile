@@ -1,22 +1,25 @@
-FROM	alpine:3.20.6
+FROM alpine:3.20.3
 
-RUN apk add --no-cache \
+RUN apk update \
+&&	apk add --no-cache \
 	php \
 	php-fpm \
 	php-phar \
 	php-cli \
 	php-mysqli \
-	php-mbstring \
-	curl 
+	curl \
+	git \
+	mariadb-client
 
 RUN adduser -D -G www-data www-data
 
-WORKDIR /var/www/wordpress
+WORKDIR /var/www
 
-# COPY	./conf/www.conf /etc/php82/php-fpm.d/.
-COPY	./tools/start.sh /usr/local/bin/start.sh
-RUN		chmod +x /usr/local/bin/start.sh
+# COPY conf/wp-config.php .
+COPY tools/start.sh .
+RUN chmod +x start.sh
 
 EXPOSE 9000
 
-ENTRYPOINT [ "/usr/local/bin/start.sh" ] 
+ENTRYPOINT [ "./start.sh" ]
+
